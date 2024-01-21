@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Your other theme attributes go here -->
+    </style>
+
+    <!-- Transparent theme -->
+    <style name="TransparentTheme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- Additional attributes if needed -->
+    </style>
+
+</resources>
