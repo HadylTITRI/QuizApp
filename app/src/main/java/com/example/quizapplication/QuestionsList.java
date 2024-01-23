@@ -1,10 +1,16 @@
 package com.example.quizapplication;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.database.Cursor;
+
 public class QuestionsList {
     private String question, option1, option2, option3, option4, answer;
     private String userSelectedAnswer;
+    private int id;
+    private String topic;
 
-    public QuestionsList(String question, String option1, String option2, String option3, String option4, String answer, String userSelectedAnswer) {
+    public QuestionsList(String question, String option1, String option2, String option3, String option4, String answer, String userSelectedAnswer, String topic) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
@@ -12,6 +18,7 @@ public class QuestionsList {
         this.option4 = option4;
         this.answer = answer;
         this.userSelectedAnswer = userSelectedAnswer;
+        this.topic = topic;
     }
 
     public QuestionsList() {
@@ -73,6 +80,27 @@ public class QuestionsList {
     public void setUserSelectedAnswer(String userSelectedAnswer) {
         this.userSelectedAnswer = userSelectedAnswer;
     }
+
+
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
 
 }
 

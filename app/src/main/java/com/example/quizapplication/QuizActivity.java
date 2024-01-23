@@ -40,6 +40,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        dbHelper = new QuizDbHelper(this);
+
         final String getSelectedTopicName = getIntent().getStringExtra("selectedTopic");
 
         final ImageView backBtn = findViewById(R.id.backbtn);
@@ -59,17 +61,65 @@ public class QuizActivity extends AppCompatActivity {
         selectedTopicName.setText(getSelectedTopicName);
 
         assert getSelectedTopicName != null;
-        questionsLists = QustionsBank.getQuestions(getSelectedTopicName);
+        //questionsLists = QustionsBank.getQuestions(getSelectedTopicName);
+
+        dbHelper.addQuestion("Which programming language is known for its simplicity and readability, and uses indentation to define code blocks?", "Java",
+                "C++", "Python", "JavaScript", "Python", "", "programming");
+        dbHelper.addQuestion("In object-oriented programming, what is encapsulation?", "The process of converting code into machine language",
+                "The bundling of data and methods that operate on that data" , "The technique of organizing code into reusable units" , "The act of testing code before deployment",
+                "The bundling of data and methods that operate on that data", "", "programming");
+        dbHelper.addQuestion("Which data structure follows the Last In, First Out (LIFO) principle?", "Queue" ,
+                "Stack", "Linked List" , "Array",
+                "Stack", "", "programming");
+        dbHelper.addQuestion("Which of the following programming languages is commonly used for building Android applications?", "Swift",
+                "Kotlin", "Java", "C++", "Java", "", "programming");
+
+
+        dbHelper.addQuestion("What is the result of 2^3 x 3^2 ?", "12",
+                "72", "216", "64", "216", "", "maths");
+        dbHelper.addQuestion("What is the perimeter of a rectangle with length 8 units and width 5 units?", "10 units",
+                "16 units" , "26 units" , "34 units", "26 units", "", "maths");
+        dbHelper.addQuestion("What is the area of a triangle with a base of 10 units and a height of 8 units?", "20 square units" ,
+                "40 square units", "60 square units" , "80 square units",
+                "60 square units", "", "maths");
+        dbHelper.addQuestion("If 2x+3=11, what is the value of x ",
+                "2", "4", "5", "7", "4", "", "maths");
+
+
+        dbHelper.addQuestion("What is the primary goal of exploratory data analysis (EDA) in data science?", " Building predictive models",
+                "Summarizing and visualizing data", "Cleaning and preprocessing data", "Evaluating model performance", "Summarizing and visualizing data", "", "data");
+        dbHelper.addQuestion("Which of the following algorithms is commonly used for clustering in unsupervised machine learning?", "Decision Trees",
+                "K-Means" , " Support Vector Machines (SVM)" , " Random Forest",
+                "K-Means", "", "data");
+        dbHelper.addQuestion("In the context of machine learning, what does \"overfitting\" refer to?", "The model performs well on the training data but poorly on new, unseen data" ,
+                "The model is too simple and cannot capture the underlying patterns in the data", "The model memorizes the training data instead of learning the underlying patterns" , "The model is unable to converge during the training process",
+                "The model memorizes the training data instead of learning the underlying patterns", "", "data");
+        dbHelper.addQuestion("What is the purpose of the term \"feature scaling\" in machine learning?", "Selecting the most important features for model training",
+                "Transforming categorical features into numerical representations", "Scaling the target variable for regression models", " Ensuring that all input features have the same scale or distribution", " Ensuring that all input features have the same scale or distribution", "", "data");
+
+        dbHelper.addQuestion("What does the acronym \"TCP\" stand for in the context of networking?", "Transfer Control Protocol",
+                "Transmission Control Protocol", "Telecommunication Control Protocol", "Technical Control Protocol", "Transmission Control Protocol", "", "networking");
+        dbHelper.addQuestion("In the OSI model, which layer is responsible for logical addressing and routing?", "Data Link Layer",
+                "Physical Layer" , "Network Layer" , "Transport Layer",
+                "Network Layer", "", "networking");
+        dbHelper.addQuestion("What is the purpose of a subnet mask in IP networking?", "Identifying the network portion of an IP address" ,
+                "Assigning a unique identifier to each device on the network", "Encrypting data during transmission" , "Determining the physical location of a device", "Identifying the network portion of an IP address", "", "networking");
+        dbHelper.addQuestion("Which protocol is commonly used for secure communication over the Internet, providing encryption and authentication?", "HTTP",
+                "FTP", "SSL/TLS", "UDP", "SSL/TLS", "", "networking");
+
+        questionsLists = dbHelper.getQuestions(getSelectedTopicName);
 
         startTimer(timer);
 
         questions.setText((currentQuestionsPosition + 1) + "/" + questionsLists.size());
-        question.setText(questionsLists.get(0).getQuestion());
-        option1.setText(questionsLists.get(0).getOption1());
-        option2.setText(questionsLists.get(0).getOption2());
-        option3.setText(questionsLists.get(0).getOption3());
-        option4.setText(questionsLists.get(0).getOption4());
 
+        if (!questionsLists.isEmpty()) {
+            question.setText(questionsLists.get(0).getQuestion());
+            option1.setText(questionsLists.get(0).getOption1());
+            option2.setText(questionsLists.get(0).getOption2());
+            option3.setText(questionsLists.get(0).getOption3());
+            option4.setText(questionsLists.get(0).getOption4());
+        }
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,31 +203,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-       /* dbHelper = new QuizDbHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM questions WHERE topic = 'programming'", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                // Retrieve question details from the cursor
-                int id = cursor.getInt(cursor.getColumnIndex("id"));
-                String question = cursor.getString(cursor.getColumnIndex("question"));
-                String option1 = cursor.getString(cursor.getColumnIndex("option1"));
-                String option2 = cursor.getString(cursor.getColumnIndex("option2"));
-                String option3 = cursor.getString(cursor.getColumnIndex("option3"));
-                String option4 = cursor.getString(cursor.getColumnIndex("option4"));
-                String answer = cursor.getString(cursor.getColumnIndex("answer"));
-
-                // Display the question in the UI
-                TextView questionTextView = findViewById(R.id.questionTextView);
-                questionTextView.setText(question);
-                // Display options and handle user input
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();*/
     }
 
     private void changeNextQuestion() {
