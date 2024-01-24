@@ -25,11 +25,10 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         dbase = db;
-        String query = "Create Table Questions (question TEXT ,option1 TEXT,option2 TEXT,"
+        String query = "CREATE TABLE IF NOT EXISTS Questions (question TEXT ,option1 TEXT,option2 TEXT,"
                 +"option3 TEXT, option4 TEXT,answer TEXT,userSelectedAnswer TEXT,topic TEXT)";
 
         dbase.execSQL(query);
-
     }
 
     @Override
@@ -61,14 +60,10 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         List<QuestionsList> questionsList = new ArrayList<>();
         dbase = this.getReadableDatabase();
 
-        //Cursor cursor = dbase.rawQuery("SELECT * FROM questions WHERE topic = "+topic.trim()+"",null);
-
-        //Cursor cursor = dbase.rawQuery("SELECT * FROM Questions WHERE topic = ?", new String[]{topic});
-
         Cursor cursor = dbase.query("questions", new String[]{"question", "option1", "option2", "option3", "option4", "answer", "userSelectedAnswer", "topic"},
                 "topic=?", new String[]{topic}, null, null, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 // Lisez les données de la ligne du curseur et ajoutez-les à la liste
                 QuestionsList question = new QuestionsList();
@@ -83,6 +78,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
 
                 questionsList.add(question);
             } while (cursor.moveToNext());
+            cursor.close();
         }
         if(cursor != null){
             cursor.close();

@@ -18,11 +18,11 @@ public class QuizResults extends AppCompatActivity {
         final TextView correctAnswer = findViewById(R.id.correctAnswers);
         final TextView incorretAnswers = findViewById(R.id.incorrectAnswers);
 
-        final int getCorrectAnswers = getIntent().getIntExtra("correct", 0);
+        final int getCorrectAnswers = getIntent().getIntExtra("Correct", 0);
         final int getIncorrectAnswers = getIntent().getIntExtra("incorrect", 0);
 
-        correctAnswer.setText(String.valueOf(getCorrectAnswers));
-        incorretAnswers.setText(String.valueOf(getIncorrectAnswers));
+        correctAnswer.setText("Correct answers : "+String.valueOf(getCorrectAnswers));
+        incorretAnswers.setText("Incorrect answers : "+String.valueOf(getIncorrectAnswers));
 
         startNewBtn.setOnClickListener(new View.OnClickListener() {
 

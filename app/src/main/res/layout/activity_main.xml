@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_color"
+    android:background="@drawable/background_color_main"
     tools:context=".MainActivity">
 
     <ImageView
@@ -23,10 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/quizIcon"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="130dp"
         android:layout_marginEnd="20dp"
         android:textColor="#000000"
-        android:text="Choose Topic"
+        android:text="Choose a Topic"
         android:textStyle="bold"
         android:textSize="20sp"
         />
@@ -173,6 +173,5 @@
         android:textColor="#FFFFFF"
         android:textSize="25sp"
         android:background="@drawable/round_back_orange20"/>
-
 
 </RelativeLayout>
